@@ -11,6 +11,9 @@ from linebot.models import (
 )
 import os
 
+#形態素解析
+import morph
+
 app = Flask(__name__)
 
 #環境変数取得
@@ -40,9 +43,12 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text + "です"))
+    text = morph.analize(event.message.text)
+    for t in text:
+        line_bot_api.reply_message(
+            event.reply_token,
+            #TextSendMessage(text=event.message.text + "です"))
+            TextSendMessage(t.surface(), t.part_of_speech(), t.reading_form(), t.normalized_form()))
 
 
 if __name__ == "__main__":
