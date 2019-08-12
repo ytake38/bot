@@ -43,12 +43,12 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    t = morph.analize(event.message.text)
+    #t = morph.analize(event.message.text)
     #    for t in text:
     line_bot_api.reply_message(
         event.reply_token,
-        #TextSendMessage(text=event.message.text + "です"))
-        TextSendMessage(text=t.surface()))
+        TextSendMessage(text=event.message.text + "です"))
+        #TextSendMessage(text=t.surface()))
 
 
 if __name__ == "__main__":
